@@ -3,7 +3,7 @@ import { useSnippets } from "../../../hooks/useSnippets";
 import { useSettings } from "../../../hooks/useSettings";
 import { useToast } from "../../../hooks/useToast";
 import { initializeMonaco } from "../../../utils/language/languageUtils";
-import EditSnippetModal from "../edit/EditSnippetModal";
+import ClaudeFileEditor from "../edit/ClaudeFileEditor";
 import SettingsModal from "../../settings/SettingsModal";
 import { ShareMenu } from "../share/ShareMenu";
 import { UserDropdown } from "../../auth/UserDropdown";
@@ -160,15 +160,12 @@ const SnippetStorage: React.FC = () => {
         handleShowFavorites={handleShowFavorites}
       />
 
-      <EditSnippetModal
+      <ClaudeFileEditor
         isOpen={isEditSnippetModalOpen}
         onClose={closeEditSnippetModal}
         onSubmit={handleSnippetSubmit}
-        snippetToEdit={snippetToEdit}
+        fileToEdit={snippetToEdit}
         showLineNumbers={showLineNumbers}
-        allCategories={[
-          ...new Set(snippets.flatMap((snippet) => snippet.categories)),
-        ].sort()}
       />
 
       <SettingsModal
