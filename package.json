@@ -1,7 +1,7 @@
 {
-  "name": "bytestash",
-  "description": "A React and node.js app that stores code snippets",
-  "author": "Jordan Dalby",
+  "name": "claudestash",
+  "description": "A React and node.js app that stores Claude Code files with validation",
+  "author": "jmagar (Originally forked from ByteStash by Jordan Dalby)",
   "version": "1.0.0",
   "main": "server/app.js",
   "scripts": {

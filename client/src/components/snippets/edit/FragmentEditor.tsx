@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Trash2,
   ChevronUp,
@@ -11,6 +11,8 @@ import { CodeFragment } from "../../../types/snippets";
 import BaseDropdown from "../../common/dropdowns/BaseDropdown";
 import { getLanguageDropdownSections } from "../../../utils/language/languageUtils";
 import { CodeEditor } from "../../editor/CodeEditor";
+import { ClaudeCodeValidation } from "../../common/ClaudeCodeValidation";
+import { isClaudeCodeFile, validateClaudeCodeFile } from "../../../utils/claudeCodeUtils";
 
 interface FragmentEditorProps {
   fragment: CodeFragment;
@@ -84,6 +86,20 @@ export const FragmentEditor: React.FC<FragmentEditorProps> = ({
       language: newLanguage,
     });
   };
+
+  // Check if this is a Claude Code file and validate it
+  const claudeCodeValidation = useMemo(() => {
+    const fullFileName = fragment.file_name + (
+      fragment.language === "claude-settings" || 
+      fragment.language === "claude-plugin" || 
+      fragment.language === "claude-marketplace" ? ".json" : ".md"
+    );
+    
+    if (isClaudeCodeFile(fullFileName)) {
+      return validateClaudeCodeFile(fullFileName, fragment.code);
+    }
+    return null;
+  }, [fragment.file_name, fragment.language, fragment.code]);
 
   return (
     <div className="border rounded-lg shadow-lg bg-light-surface dark:bg-dark-surface border-light-border dark:border-dark-border">
@@ -186,7 +202,13 @@ export const FragmentEditor: React.FC<FragmentEditorProps> = ({
           transition: "all 0.2s ease-in-out",
         }}
       >
-        <div className="p-3">
+        <div className="p-3 space-y-3">
+          {claudeCodeValidation && (
+            <ClaudeCodeValidation
+              validation={claudeCodeValidation}
+              fileName={fragment.file_name}
+            />
+          )}
           <CodeEditor
             code={fragment.code}
             language={fragment.language}
