@@ -15,6 +15,7 @@ import {
   getTemplateByType,
   getTemplateTypes,
 } from "../../../utils/claudeCodeTemplates";
+import { getFileTypeIcon } from "../sidebar/FileTypeSidebar";
 
 export interface ClaudeFileEditorProps {
   isOpen: boolean;
@@ -249,15 +250,7 @@ const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
                   className="flex items-center gap-3 p-4 rounded-lg border-2 border-light-border dark:border-dark-border hover:border-light-primary dark:hover:border-dark-primary hover:bg-light-hover dark:hover:bg-dark-hover transition-all text-left"
                 >
                   <div className="text-light-primary dark:text-dark-primary">
-                    {template.value === "claude-md" && <FileText size={24} />}
-                    {template.value === "claude-command" && <FileText size={24} />}
-                    {template.value === "claude-agent" && <FileText size={24} />}
-                    {template.value === "claude-skill" && <FileText size={24} />}
-                    {template.value === "claude-hook" && <FileText size={24} />}
-                    {template.value === "claude-output-style" && <FileText size={24} />}
-                    {template.value === "claude-settings" && <FileText size={24} />}
-                    {template.value === "claude-plugin" && <FileText size={24} />}
-                    {template.value === "claude-marketplace" && <FileText size={24} />}
+                    {getFileTypeIcon(template.value, 24)}
                   </div>
                   <span className="text-sm font-medium text-light-text dark:text-dark-text">
                     {template.label}
