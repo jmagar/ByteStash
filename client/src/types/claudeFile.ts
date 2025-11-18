@@ -23,7 +23,7 @@ export interface ShareSettings {
 
 export interface Share {
   id: string;
-  snippet_id: number; // Keep for backwards compatibility with API
+  snippet_id: string; // Keep for backwards compatibility with API
   requires_auth: number;
   view_limit: number | null;
   view_count: number;
