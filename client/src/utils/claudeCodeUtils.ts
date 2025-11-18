@@ -1,5 +1,6 @@
 // Utility functions for Claude Code file parsing and validation
 
+import * as yaml from 'js-yaml';
 import {
   ClaudeCodeFileType,
   ValidationResult,
@@ -29,51 +30,40 @@ export const parseFrontmatter = (
   const [, yamlContent, body] = match;
   
   try {
-    // Simple YAML parser (for basic key-value pairs)
-    const frontmatter: YAMLFrontmatter = {};
-    const lines = yamlContent.split("\n");
-    
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      
-      // Handle key-value pairs
-      const colonIndex = trimmed.indexOf(":");
-      if (colonIndex > 0) {
-        const key = trimmed.substring(0, colonIndex).trim();
-        const valueStr = trimmed.substring(colonIndex + 1).trim();
-        
-        // Parse value (handle strings, arrays, booleans, numbers)
-        let value: any = valueStr;
-        
-        // Remove quotes from strings
-        if ((valueStr.startsWith('"') && valueStr.endsWith('"')) ||
-            (valueStr.startsWith("'") && valueStr.endsWith("'"))) {
-          value = valueStr.slice(1, -1);
-        }
-        // Handle arrays
-        else if (valueStr.startsWith("[") && valueStr.endsWith("]")) {
-          const arrayContent = valueStr.slice(1, -1);
-          value = arrayContent.split(",").map(item => item.trim().replace(/^["']|["']$/g, ""));
-        }
-        // Handle booleans
-        else if (valueStr === "true") value = true;
-        else if (valueStr === "false") value = false;
-        // Handle numbers
-        else if (!isNaN(Number(valueStr)) && valueStr !== "") {
-          value = Number(valueStr);
-        }
-        
-        frontmatter[key] = value;
-      }
+    // Use js-yaml for robust YAML parsing (supports multi-line values, nested objects, etc.)
+    const frontmatter = yaml.load(yamlContent) as YAMLFrontmatter;
+    if (frontmatter && typeof frontmatter === 'object') {
+      return { frontmatter, body: body.trim() };
     }
-    
-    return { frontmatter, body: body.trim() };
+    return { frontmatter: null, body: content };
   } catch (error) {
-    console.error("Failed to parse frontmatter:", error);
+    console.warn('Failed to parse YAML frontmatter:', error);
     return { frontmatter: null, body: content };
   }
 };
+
+// Helper function to get full filename with proper extension
+export const getFullFileName = (fileName: string, language: string): string => {
+  // Determine the required extension based on language
+  const requiredExtension =
+    language === "claude-settings" ||
+    language === "claude-plugin" ||
+    language === "claude-marketplace"
+      ? ".json"
+      : ".md";
+  
+  // Check if file_name already has an extension
+  const hasExtension = /\.[^./\\]+$/.test(fileName);
+  
+  return hasExtension ? fileName : fileName + requiredExtension;
+};
+
+// Helper function to format JSON parsing errors
+const formatJsonError = (error: unknown): string => {
+  return `Invalid JSON format: ${error instanceof Error ? error.message : 'Unknown error'}`;
+};
+
+
 
 // Detect Claude Code file type from filename
 export const detectClaudeCodeFileType = (
