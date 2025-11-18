@@ -83,11 +83,14 @@ export const ACCEPTED_FILE_EXTENSIONS = [
 import { detectClaudeCodeFileType } from "./claudeCodeUtils";
 
 // Detect programming language from file extension
-export const detectLanguageFromFilename = (filename: string): string => {
-  // Check if it's a Claude Code file first
-  const claudeFileType = detectClaudeCodeFileType(filename);
-  if (claudeFileType) {
-    return claudeFileType;
+export const detectLanguageFromFilename = (filename: string, content?: string): string => {
+  const extension = filename.split(".").pop()?.toLowerCase();
+  // Only check for Claude Code file type for .md or .markdown files, and require content
+  if ((extension === "md" || extension === "markdown") && content) {
+    const claudeFileType = detectClaudeCodeFileType(filename, content);
+    if (claudeFileType) {
+      return claudeFileType;
+    }
   }
 
   const extensionMap: Record<string, string> = {
