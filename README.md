@@ -1,6 +1,6 @@
 # ClaudeStash
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jordan-dalby/ByteStash/refs/heads/main/client/public/logo192.png" />
+  <img src="https://raw.githubusercontent.com/jmagar/claudestash/main/client/public/logo192.png" alt="ClaudeStash Logo" />
 </p>
 
 ClaudeStash is a self-hosted web application designed to store, organize, and manage your Claude Code files efficiently. With support for creating, editing, and validating Claude Code files including CLAUDE.md, agents, skills, commands, hooks, output styles, settings, plugins, and marketplaces, ClaudeStash helps you keep track of your Claude Code configurations in one secure place.
