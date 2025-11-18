@@ -126,8 +126,8 @@ export const detectClaudeCodeFileType = (
       return ClaudeCodeFileType.OUTPUT_STYLE;
     }
     
-    // Default to command for other .md files (slash commands)
-    return ClaudeCodeFileType.COMMAND;
+    // Return null for other .md files that don't match specific patterns
+    return null;
   }
 
   return null;
