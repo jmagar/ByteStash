@@ -12,6 +12,11 @@ import StorageHeader from "./StorageHeader";
 import { IconButton } from "../../../common/buttons/IconButton";
 import { ConfirmationModal } from "../../../common/modals/ConfirmationModal";
 import { useToast } from "../../../../hooks/useToast";
+import FileTypeSidebar, {
+  getFileTypeIcon,
+  getFileTypeLabel,
+  FileTypeFilter,
+} from "../../sidebar/FileTypeSidebar";
 
 interface BaseSnippetStorageProps {
   snippets: Snippet[];
@@ -85,6 +90,7 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPermanentDeleteAllModalOpen, setIsPermanentDeleteAllModalOpen] =
     useState(false);
+  const [selectedFileType, setSelectedFileType] = useState<string | null>(null);
   const navigate = useNavigate();
   const { addToast } = useToast();
 
@@ -152,6 +158,30 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
     [snippets]
   );
 
+  const fileTypeFilters = useMemo((): FileTypeFilter[] => {
+    const typeCounts = new Map<string, number>();
+    
+    snippets.forEach((snippet) => {
+      // Use the first category as the file type if it starts with "claude-"
+      const fileType = snippet.categories.find((cat) => cat.startsWith("claude-"));
+      if (fileType) {
+        typeCounts.set(fileType, (typeCounts.get(fileType) || 0) + 1);
+      }
+    });
+
+    const filters: FileTypeFilter[] = [];
+    typeCounts.forEach((count, type) => {
+      filters.push({
+        type,
+        label: getFileTypeLabel(type),
+        icon: getFileTypeIcon(type, 18),
+        count,
+      });
+    });
+
+    return filters.sort((a, b) => a.label.localeCompare(b.label));
+  }, [snippets]);
+
   const filteredSnippets = useMemo(() => {
     const result = snippets
       .filter((snippet) => {
@@ -187,7 +217,12 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
           selectedCategories.length === 0 ||
           selectedCategories.every((cat) => snippet.categories.includes(cat));
 
-        return (basicMatch || fragmentMatch) && languageMatch && categoryMatch;
+        // Add file type filtering
+        const fileTypeMatch =
+          selectedFileType === null ||
+          snippet.categories.includes(selectedFileType);
+
+        return (basicMatch || fragmentMatch) && languageMatch && categoryMatch && fileTypeMatch;
       })
       .sort((a, b) => {
         if (a.is_pinned !== b.is_pinned) {
@@ -237,7 +272,7 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
 
   const openPermanentDeleteAllModal = () => {
     if (snippets.length === 0) {
-      addToast("No snippets in the recycle bin to clear.", "info");
+      addToast("No files in the recycle bin to clear.", "info");
       return;
     }
     setIsPermanentDeleteAllModalOpen(true);
@@ -272,11 +307,11 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
       <PageContainer>
         <div className="flex flex-col items-center justify-center min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
           <div className="relative">
-            <h1 className="mb-4 text-4xl font-bold">ByteStash</h1>
+            <h1 className="mb-4 text-4xl font-bold">ClaudeStash</h1>
             <div className="flex items-center justify-center gap-3">
               <Loader2 className="w-5 h-5 text-light-text-secondary dark:text-dark-text-secondary animate-spin" />
               <span className="text-light-text-secondary dark:text-dark-text-secondary">
-                Loading snippets...
+                Loading files...
               </span>
             </div>
           </div>
@@ -286,13 +321,24 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
   }
 
   return (
-    <div className="min-h-screen p-8 bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
-      <div className="flex items-start justify-between mb-4">
-        <StorageHeader isPublicView={isPublicView} />
-        {headerRight}
-      </div>
+    <div className="min-h-screen flex bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
+      {/* Sidebar */}
+      {!isPublicView && !isRecycleView && fileTypeFilters.length > 0 && (
+        <FileTypeSidebar
+          filters={fileTypeFilters}
+          selectedType={selectedFileType}
+          onSelectType={setSelectedFileType}
+        />
+      )}
 
-      <SearchAndFilter
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        <div className="flex items-start justify-between mb-4">
+          <StorageHeader isPublicView={isPublicView} />
+          {headerRight}
+        </div>
+
+        <SearchAndFilter
         searchTerm={searchTerm}
         setSearchTerm={handleSearchTermChange}
         selectedLanguage={selectedLanguage}
@@ -319,14 +365,14 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-sm font-medium text-white hover:underline"
           >
-            <ArrowLeftToLine size={18} /> Back to Snippets
+            <ArrowLeftToLine size={18} /> Back to Files
           </button>
 
           <div className="flex items-center justify-between text-sm text-light-text-primary dark:text-dark-text-secondary">
             <div>
               <h1 className="text-2xl font-semibold text-white">Recycle Bin</h1>
               <p className="text-sm">
-                Snippets in the recycle bin will be permanently deleted after 30
+                Files in the recycle bin will be permanently deleted after 30
                 days.
               </p>
             </div>
@@ -403,11 +449,12 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
         onClose={closePermanentDeleteAllModal}
         onConfirm={handlePermanentDeleteAllConfirm}
         title="Confirm Deletion"
-        message={`Are you sure you want to permanently clear all snippets in the recycle bin? This action cannot be undone.`}
+        message={`Are you sure you want to permanently clear all files in the recycle bin? This action cannot be undone.`}
         confirmLabel="Delete Permanently"
         cancelLabel="Cancel"
         variant="danger"
       />
+      </div>
     </div>
   );
 };

@@ -80,8 +80,16 @@ export const ACCEPTED_FILE_EXTENSIONS = [
   ".txt",
 ].join(",");
 
+import { detectClaudeCodeFileType } from "./claudeCodeUtils";
+
 // Detect programming language from file extension
 export const detectLanguageFromFilename = (filename: string): string => {
+  // Check if it's a Claude Code file first
+  const claudeFileType = detectClaudeCodeFileType(filename);
+  if (claudeFileType) {
+    return claudeFileType;
+  }
+
   const extensionMap: Record<string, string> = {
     // JavaScript/TypeScript
     js: "javascript",

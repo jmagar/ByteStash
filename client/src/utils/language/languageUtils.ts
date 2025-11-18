@@ -424,6 +424,53 @@ const LANGUAGE_MAPPING: LanguageMapping = {
     label: "abap",
   },
 
+  // Claude Code File Types
+  "claude-md": {
+    aliases: ["claude.md", "claudemd", "claude-context"],
+    monacoAlias: "markdown",
+    label: "claude.md",
+  },
+  "claude-command": {
+    aliases: ["slash-command", "claude-slash-command", "command.md"],
+    monacoAlias: "markdown",
+    label: "claude-command",
+  },
+  "claude-agent": {
+    aliases: ["agent.md", "claude-agent-config"],
+    monacoAlias: "markdown",
+    label: "claude-agent",
+  },
+  "claude-skill": {
+    aliases: ["skill.md", "claude-skill-config"],
+    monacoAlias: "markdown",
+    label: "claude-skill",
+  },
+  "claude-hook": {
+    aliases: ["hook.md", "claude-hook-config"],
+    monacoAlias: "markdown",
+    label: "claude-hook",
+  },
+  "claude-output-style": {
+    aliases: ["output-style.md", "claude-style"],
+    monacoAlias: "markdown",
+    label: "claude-output-style",
+  },
+  "claude-settings": {
+    aliases: ["settings.json", "settings.local.json", "claude-config"],
+    monacoAlias: "json",
+    label: "claude-settings",
+  },
+  "claude-plugin": {
+    aliases: ["plugin.json", "claude-plugin-manifest"],
+    monacoAlias: "json",
+    label: "claude-plugin",
+  },
+  "claude-marketplace": {
+    aliases: ["marketplace.json", "claude-marketplace-config"],
+    monacoAlias: "json",
+    label: "claude-marketplace",
+  },
+
   // Fallback
   plaintext: {
     aliases: ["text", "txt", "plain", "log", "raw"],

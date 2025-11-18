@@ -1,5 +1,5 @@
 {
-  "name": "bytestash-client",
+  "name": "claudestash-client",
   "version": "0.1.0",
   "license": "ISC",
   "dependencies": {
@@ -18,7 +18,7 @@
     "vite-plugin-monaco-editor": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.28",
+    "@types/node": "^20.19.25",
     "@types/prismjs": "^1.26.5",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",

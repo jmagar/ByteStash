@@ -54,7 +54,7 @@ const SnippetList: React.FC<SnippetListProps> = ({
     return (
       <div className="py-12 text-center">
         <p className="mb-4 text-xl text-light-text-secondary dark:text-dark-text-secondary">
-          No snippets match your search criteria.
+          No files match your search criteria.
         </p>
       </div>
     );

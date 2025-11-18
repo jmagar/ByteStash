@@ -14,8 +14,8 @@ const StorageHeader: React.FC<StorageHeaderProps> = ({ isPublicView }) => {
   const navigate = useNavigate();
 
   const tooltipText = isPublicView 
-    ? "You're viewing publicly shared snippets. These snippets are read-only and visible to everyone."
-    : "You're viewing your private snippets. Only you can see and modify these snippets.";
+    ? "You're viewing publicly shared files. These files are read-only and visible to everyone."
+    : "You're viewing your private files. Only you can see and modify these files.";
 
   const handleViewToggle = (checked: boolean) => {
     navigate(checked ? ROUTES.PUBLIC_SNIPPETS : ROUTES.HOME);
@@ -24,8 +24,8 @@ const StorageHeader: React.FC<StorageHeaderProps> = ({ isPublicView }) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-4xl font-bold text-light-text dark:text-dark-text flex items-baseline gap-2">
-        <img src={getAssetPath('/logo512.png')} alt="ByteStash Logo" className="w-7 h-7" />
-        ByteStash
+        <img src={getAssetPath('/logo512.png')} alt="ClaudeStash Logo" className="w-7 h-7" />
+        ClaudeStash
         <span className="text-sm text-light-text-secondary dark:text-dark-text-secondary">v{APP_VERSION}</span>
       </h1>
       
