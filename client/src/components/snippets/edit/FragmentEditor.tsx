@@ -12,7 +12,7 @@ import BaseDropdown from "../../common/dropdowns/BaseDropdown";
 import { getLanguageDropdownSections } from "../../../utils/language/languageUtils";
 import { CodeEditor } from "../../editor/CodeEditor";
 import { ClaudeCodeValidation } from "../../common/ClaudeCodeValidation";
-import { isClaudeCodeFile, validateClaudeCodeFile } from "../../../utils/claudeCodeUtils";
+import { isClaudeCodeFile, validateClaudeCodeFile, getFullFileName } from "../../../utils/claudeCodeUtils";
 
 interface FragmentEditorProps {
   fragment: CodeFragment;
@@ -89,18 +89,7 @@ export const FragmentEditor: React.FC<FragmentEditorProps> = ({
 
   // Check if this is a Claude Code file and validate it
   const claudeCodeValidation = useMemo(() => {
-    // Determine the required extension based on language
-    const requiredExtension =
-      fragment.language === "claude-settings" ||
-      fragment.language === "claude-plugin" ||
-      fragment.language === "claude-marketplace"
-        ? ".json"
-        : ".md";
-    // Check if file_name already has an extension
-    const hasExtension = /\.[^./\\]+$/.test(fragment.file_name);
-    const fullFileName = hasExtension
-      ? fragment.file_name
-      : fragment.file_name + requiredExtension;
+    const fullFileName = getFullFileName(fragment.file_name, fragment.language);
     
     if (isClaudeCodeFile(fullFileName)) {
       return validateClaudeCodeFile(fullFileName, fragment.code);

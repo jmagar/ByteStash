@@ -59,7 +59,7 @@ export const getFullFileName = (fileName: string, language: string): string => {
 };
 
 // Helper function to format JSON parsing errors
-const formatJsonError = (error: unknown): string => {
+export const formatJsonError = (error: unknown): string => {
   return `Invalid JSON format: ${error instanceof Error ? error.message : 'Unknown error'}`;
 };
 
@@ -346,7 +346,7 @@ export const validateClaudeSettings = (content: string): ValidationResult => {
       errors.push("env must be an object");
     }
   } catch (error) {
-    errors.push("Invalid JSON format");
+    errors.push(formatJsonError(error));
   }
 
   return {
@@ -387,7 +387,7 @@ export const validateClaudePlugin = (content: string): ValidationResult => {
       errors.push("skills must be an array");
     }
   } catch (error) {
-    errors.push("Invalid JSON format");
+    errors.push(formatJsonError(error));
   }
 
   return {
@@ -431,7 +431,7 @@ export const validateClaudeMarketplace = (
       });
     }
   } catch (error) {
-    errors.push("Invalid JSON format");
+    errors.push(formatJsonError(error));
   }
 
   return {

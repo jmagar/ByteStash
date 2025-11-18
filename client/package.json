@@ -4,8 +4,10 @@
   "license": "ISC",
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@types/js-yaml": "^4.0.9",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.9",
+    "js-yaml": "^4.1.1",
     "jszip": "^3.10.1",
     "lucide-react": "^0.513.0",
     "monaco-editor": "^0.52.0",

@@ -10,6 +10,7 @@ import {
   isClaudeCodeFile,
   validateClaudeCodeFile,
   detectClaudeCodeFileType,
+  getFullFileName,
 } from "../../../utils/claudeCodeUtils";
 import {
   getTemplateByType,
@@ -124,13 +125,7 @@ const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
 
   // Check if this is a Claude Code file and validate it
   const claudeCodeValidation = React.useMemo(() => {
-    const fullFileName =
-      fileName +
-      (language === "claude-settings" ||
-      language === "claude-plugin" ||
-      language === "claude-marketplace"
-        ? ".json"
-        : ".md");
+    const fullFileName = getFullFileName(fileName, language);
 
     if (isClaudeCodeFile(fullFileName)) {
       return validateClaudeCodeFile(fullFileName, content);
@@ -162,12 +157,7 @@ const ClaudeFileEditor: React.FC<ClaudeFileEditorProps> = ({
     
     // Auto-detect file type and use as category
     const fullFileName =
-      fileName +
-      (language === "claude-settings" ||
-      language === "claude-plugin" ||
-      language === "claude-marketplace"
-        ? ".json"
-        : ".md");
+      getFullFileName(fileName, language);
     
     const detectedType = detectClaudeCodeFileType(fullFileName);
     const fileTypeCategory = detectedType || language || "other";
