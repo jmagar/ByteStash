@@ -162,11 +162,11 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
     const typeCounts = new Map<string, number>();
     
     snippets.forEach((snippet) => {
-      // Use the first category as the file type if it starts with "claude-"
-      const fileType = snippet.categories.find((cat) => cat.startsWith("claude-"));
-      if (fileType) {
+      // Count all categories that start with "claude-" as file types
+      const fileTypes = snippet.categories.filter((cat) => cat.startsWith("claude-"));
+      fileTypes.forEach((fileType) => {
         typeCounts.set(fileType, (typeCounts.get(fileType) || 0) + 1);
-      }
+      });
     });
 
     const filters: FileTypeFilter[] = [];
