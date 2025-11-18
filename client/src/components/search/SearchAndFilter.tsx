@@ -137,7 +137,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
             {!hideRecycleBin && (
               <IconButton
                 icon={<Plus size={20} />}
-                label="New Snippet"
+                label="New File"
                 onClick={openNewSnippetModal}
                 variant="action"
                 className="h-10 pl-2 pr-4"

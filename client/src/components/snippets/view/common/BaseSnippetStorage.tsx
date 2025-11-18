@@ -272,7 +272,7 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
 
   const openPermanentDeleteAllModal = () => {
     if (snippets.length === 0) {
-      addToast("No snippets in the recycle bin to clear.", "info");
+      addToast("No files in the recycle bin to clear.", "info");
       return;
     }
     setIsPermanentDeleteAllModalOpen(true);
@@ -307,11 +307,11 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
       <PageContainer>
         <div className="flex flex-col items-center justify-center min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
           <div className="relative">
-            <h1 className="mb-4 text-4xl font-bold">ByteStash</h1>
+            <h1 className="mb-4 text-4xl font-bold">ClaudeStash</h1>
             <div className="flex items-center justify-center gap-3">
               <Loader2 className="w-5 h-5 text-light-text-secondary dark:text-dark-text-secondary animate-spin" />
               <span className="text-light-text-secondary dark:text-dark-text-secondary">
-                Loading snippets...
+                Loading files...
               </span>
             </div>
           </div>
@@ -365,14 +365,14 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-sm font-medium text-white hover:underline"
           >
-            <ArrowLeftToLine size={18} /> Back to Snippets
+            <ArrowLeftToLine size={18} /> Back to Files
           </button>
 
           <div className="flex items-center justify-between text-sm text-light-text-primary dark:text-dark-text-secondary">
             <div>
               <h1 className="text-2xl font-semibold text-white">Recycle Bin</h1>
               <p className="text-sm">
-                Snippets in the recycle bin will be permanently deleted after 30
+                Files in the recycle bin will be permanently deleted after 30
                 days.
               </p>
             </div>
@@ -449,7 +449,7 @@ const BaseSnippetStorage: React.FC<BaseSnippetStorageProps> = ({
         onClose={closePermanentDeleteAllModal}
         onConfirm={handlePermanentDeleteAllConfirm}
         title="Confirm Deletion"
-        message={`Are you sure you want to permanently clear all snippets in the recycle bin? This action cannot be undone.`}
+        message={`Are you sure you want to permanently clear all files in the recycle bin? This action cannot be undone.`}
         confirmLabel="Delete Permanently"
         cancelLabel="Cancel"
         variant="danger"

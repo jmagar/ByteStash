@@ -19,7 +19,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onCategorySelect,
   existingCategories,
   selectedCategories,
-  placeholder = "Search snippets... (Type # to see all available categories)"
+  placeholder = "Search files... (Type # to see all available categories)"
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const lastValueRef = useRef(value);
