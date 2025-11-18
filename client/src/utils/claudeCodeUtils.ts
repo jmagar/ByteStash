@@ -213,8 +213,16 @@ export const validateClaudeAgent = (content: string): ValidationResult => {
       warnings.push("Description should be less than 1024 characters");
     }
     
-    if (fm.model && !["opus", "sonnet", "haiku"].includes(fm.model)) {
-      warnings.push("Model should be one of: opus, sonnet, haiku");
+    if (
+      fm.model &&
+      !(
+        ["opus", "sonnet", "haiku"].includes(fm.model) ||
+        /^claude-(opus|sonnet|haiku)-\d{8}$/.test(fm.model)
+      )
+    ) {
+      warnings.push(
+        "Model should be one of: opus, sonnet, haiku, or a valid Claude model identifier (e.g., claude-sonnet-4-20250514)"
+      );
     }
   }
 
