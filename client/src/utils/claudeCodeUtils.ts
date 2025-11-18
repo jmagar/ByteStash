@@ -203,8 +203,8 @@ export const validateClaudeAgent = (content: string): ValidationResult => {
     
     if (!fm.name) {
       errors.push("Agent name is required in frontmatter");
-    } else if (!/^[a-z0-9-]+$/.test(fm.name)) {
-      errors.push("Agent name must be lowercase with hyphens only (no spaces)");
+    } else if (!/^[a-z0-9_-]+$/.test(fm.name)) {
+      errors.push("Agent name must be lowercase, and may include hyphens or underscores (no spaces)");
     }
     
     if (!fm.description) {
