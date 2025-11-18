@@ -100,7 +100,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         onSelect={handleSelect}
         getSections={getSections}
         placeholder={placeholder}
-        className="h-10 mt-0 bg-light-surface dark:bg-dark-surface"
+        className="h-10 mt-0 bg-light-surface dark:bg-dark-surface border-light-border dark:border-dark-border focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-600 transition-all"
         showChevron={false}
       />
       {inputValue && (
@@ -111,7 +111,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           onChange('');
         }}
         variant="secondary"
-        className="absolute right-3 top-1/2 -translate-y-1/2 mr-4 text-light-text-secondary dark:text-dark-text-secondary"
+        className="absolute right-3 top-1/2 -translate-y-1/2 mr-4 text-light-text-secondary dark:text-dark-text-secondary hover:text-light-text dark:hover:text-dark-text transform hover:scale-110"
         label="Clear search"
         />
       )}

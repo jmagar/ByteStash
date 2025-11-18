@@ -64,7 +64,7 @@ const App: React.FC = () => {
   return (
     <Router basename={window.__BASE_PATH__} future={{ v7_relativeSplatPath: true }}>
       <ThemeProvider>
-        <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
+        <div className="min-h-screen bg-gradient-to-br from-light-bg via-light-surface to-light-bg dark:from-dark-bg dark:via-slate-900 dark:to-dark-bg text-light-text dark:text-dark-text transition-colors duration-300">
           <ToastProvider>
             <AuthProvider>
               <Routes>

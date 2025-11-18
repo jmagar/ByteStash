@@ -16,7 +16,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
       return savedTheme;
     }
-    return 'system';
+    // Default to dark theme for ClaudeStash
+    return 'dark';
   });
 
   useEffect(() => {

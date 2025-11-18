@@ -75,7 +75,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
       <div className="relative">
         <select
-          className="px-4 py-2 pr-10 rounded-lg appearance-none bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text focus:outline-none focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary"
+          className="px-4 py-2 pr-10 rounded-lg appearance-none bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text border border-light-border dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 hover:bg-light-hover dark:hover:bg-dark-hover transition-all cursor-pointer"
           value={selectedLanguage}
           onChange={(e) => onLanguageChange(e.target.value)}
         >
@@ -94,7 +94,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
 
       <div className="relative">
         <select
-          className="px-4 py-2 pr-10 rounded-lg appearance-none bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text focus:outline-none focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary"
+          className="px-4 py-2 pr-10 rounded-lg appearance-none bg-light-surface dark:bg-dark-surface text-light-text dark:text-dark-text border border-light-border dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 hover:bg-light-hover dark:hover:bg-dark-hover transition-all cursor-pointer"
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as SortOrder)}
         >
@@ -140,7 +140,7 @@ export const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
                 label="New File"
                 onClick={openNewSnippetModal}
                 variant="action"
-                className="h-10 pl-2 pr-4"
+                className="h-10 pl-2 pr-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transform hover:scale-105"
                 showLabel
               />
             )}

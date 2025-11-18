@@ -11,6 +11,7 @@ import BaseSnippetStorage from "./common/BaseSnippetStorage";
 import { Snippet } from "../../../types/snippets";
 import { useAuth } from "../../../hooks/useAuth";
 import { saveLanguagesUsage } from "../../../utils/language/languageUtils";
+import { TipsPanel } from "../../common/TipsPanel";
 
 const SnippetStorage: React.FC = () => {
   const {
@@ -195,6 +196,8 @@ const SnippetStorage: React.FC = () => {
           onClose={closeShareMenu}
         />
       )}
+
+      <TipsPanel />
     </>
   );
 };
