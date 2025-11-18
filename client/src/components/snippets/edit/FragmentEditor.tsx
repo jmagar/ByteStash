@@ -89,11 +89,18 @@ export const FragmentEditor: React.FC<FragmentEditorProps> = ({
 
   // Check if this is a Claude Code file and validate it
   const claudeCodeValidation = useMemo(() => {
-    const fullFileName = fragment.file_name + (
-      fragment.language === "claude-settings" || 
-      fragment.language === "claude-plugin" || 
-      fragment.language === "claude-marketplace" ? ".json" : ".md"
-    );
+    // Determine the required extension based on language
+    const requiredExtension =
+      fragment.language === "claude-settings" ||
+      fragment.language === "claude-plugin" ||
+      fragment.language === "claude-marketplace"
+        ? ".json"
+        : ".md";
+    // Check if file_name already has an extension
+    const hasExtension = /\.[^./\\]+$/.test(fragment.file_name);
+    const fullFileName = hasExtension
+      ? fragment.file_name
+      : fragment.file_name + requiredExtension;
     
     if (isClaudeCodeFile(fullFileName)) {
       return validateClaudeCodeFile(fullFileName, fragment.code);
